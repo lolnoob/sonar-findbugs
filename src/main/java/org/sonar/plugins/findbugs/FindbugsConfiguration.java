@@ -80,6 +80,10 @@ public class FindbugsConfiguration {
   public Project getFindbugsProject() throws IOException {
     Project findbugsProject = new Project();
 
+    if (disableProjectAnalysis()) {
+      return findbugsProject;
+    }
+
     for (File file : getSourceFiles()) { //The original source file are look at by some detectors
       if(FilenameUtils.getExtension(file.getName()).equals("java")) {
         findbugsProject.addFile(file.getCanonicalPath());
@@ -221,6 +225,10 @@ public class FindbugsConfiguration {
 
   public String getConfidenceLevel() {
     return StringUtils.lowerCase(settings.getString(FindbugsConstants.CONFIDENCE_LEVEL_PROPERTY));
+  }
+
+  public boolean disableProjectAnalysis() {
+    return settings.getBoolean(FindbugsConstants.DISABLE_PROJECT_ANALYSIS);
   }
 
   public long getTimeout() {

@@ -96,6 +96,13 @@ public class FindbugsConfigurationTest {
   }
 
   @Test
+  public void should_return_disable_project_analysis() {
+    assertThat(conf.disableProjectAnalysis()).isFalse();
+    settings.setProperty(FindbugsConstants.DISABLE_PROJECT_ANALYSIS, "true");
+    assertThat(conf.disableProjectAnalysis()).isTrue();
+  }
+
+  @Test
   public void should_return_confidence_level() {
     assertThat(conf.getConfidenceLevel()).as("default confidence level").isEqualTo("medium");
     settings.setProperty(FindbugsConstants.EFFORT_PROPERTY, "HIGH");
